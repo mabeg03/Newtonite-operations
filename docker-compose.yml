@@ -1,0 +1,20 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: newtonite-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: local_dev_only_change_me
+      MYSQL_DATABASE: newtonite_ops
+    ports:
+      - "3306:3306"
+    volumes:
+      - newtonite_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-plocal_dev_only_change_me"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  newtonite_mysql_data:
