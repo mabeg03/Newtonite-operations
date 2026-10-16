@@ -21,12 +21,19 @@ A compact, runnable full-stack implementation for the Newtonite Software Enginee
 CREATE DATABASE newtonite_ops CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-### 2. Configure backend
-```bash
-cd backend
-cp .env.example .env
+
+### 2. Configure the backend
+
+From the repository root, in PowerShell:
+
+```powershell
+Copy-Item backend/.env.example backend/.env
 ```
-Edit `.env` with your MySQL credentials and a long random `JWT_SECRET`.
+
+Open `backend/.env` and configure your local MySQL credentials and a long random `JWT_SECRET` (at least 32 characters).
+
+Keep `.env` files local; never commit them.
+
 
 ### 3. Install, create schema, seed demo data, and run API
 ```bash
@@ -49,14 +56,21 @@ docker compose up -d mysql
 ```
 The Compose credentials are for local development only. If using Compose's MySQL, match `DB_PASSWORD` in `backend/.env` to `local_dev_only_change_me`.
 
-### 4. Run frontend
-In a second terminal:
-```bash
+
+### 4. Run the frontend
+
+Open a second terminal at the repository root:
+
+```powershell
+Copy-Item frontend/.env.example frontend/.env
 cd frontend
 npm install
 npm run dev
 ```
-Open the URL Vite prints (usually `http://localhost:5173`). The frontend uses the API at `http://localhost:4000/api` by default. Set `VITE_API_URL` if needed.
+
+Open the local URL printed by Vite. By default, the frontend uses
+`http://localhost:4000/api` for its backend API.
+
 
 ### 5. Run automated tests
 ```bash

@@ -8,7 +8,8 @@ Users can belong to multiple teams through `team_members`. A work item is attach
 ## 2. Server-side authorization
 The API authenticates requests with a signed JWT, then checks role and resource/team membership on protected routes. The frontend hides unavailable actions for usability, but this is never treated as a security boundary.
 
-**Trade-off:** The simple roles are `ADMIN`, `MANAGER`, and `MEMBER`. A larger organization may need granular permissions and team-scoped role assignments.
+**Trade-off:** The application defines four global roles: `ADMIN`, `MANAGER`, `LEAD`, and `MEMBER`. Authorization combines the user's role with membership in the work item's team. A larger organization may need more granular permissions and independently configurable, team-scoped role assignments.
+
 
 ## 3. Optimistic concurrency with version numbers
 Every work item has a monotonically increasing `version`. The client submits the version it last read. An update succeeds only if the database row still has that version. Otherwise the API returns `409 Conflict`, and the client must refresh before retrying.
